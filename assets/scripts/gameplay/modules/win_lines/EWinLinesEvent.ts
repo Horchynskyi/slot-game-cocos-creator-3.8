@@ -3,7 +3,7 @@ export enum EWinLinesEvent {
     INDIVIDUAL_WIN_LINE_STARTED = 'INDIVIDUAL_WIN_LINE_STARTED',
 }
 
-declare module '../../events_manager/GameEventsManager' {
+declare module 'db://assets/scripts/gameplay/events_manager/GameEventsManager' {
     export interface GameEventMap {
         [EWinLinesEvent.WIN_PRESENTATION_FINISHED]: [];
         [EWinLinesEvent.INDIVIDUAL_WIN_LINE_STARTED]: [number];

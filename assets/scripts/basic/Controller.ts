@@ -1,6 +1,6 @@
 import { _decorator, Component } from 'cc';
 import { Model } from './Model';
-import { DeepReadonly } from '../types';
+import { DeepReadonly } from 'db://assets/scripts/types';
 import { Config } from './Config';
 import { EventArguments, EventKey, EventsManager } from './EventsManager';
 import { View } from './View';

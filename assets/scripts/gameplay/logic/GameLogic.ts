@@ -1,10 +1,10 @@
-import { TSpinResult, TWinResult } from '../../types';
-import { ESymbolMap } from '../../enums';
-import { GameEventsManager } from '../events_manager/GameEventsManager';
-import { GameConfig } from '../GameConfig';
-import { GameModel } from '../GameModel';
+import { TSpinResult, TWinResult } from 'db://assets/scripts/types';
+import { ESymbolMap } from 'db://assets/scripts/enums';
+import { GameEventsManager } from 'db://assets/scripts/gameplay/events_manager/GameEventsManager';
+import { GameConfig } from 'db://assets/scripts/gameplay/GameConfig';
+import { GameModel } from 'db://assets/scripts/gameplay/GameModel';
 import { EGameLogicEvent } from './EGameLogicEvent';
-import { ESpinButtonEvent } from '../modules/spin_button/ESpinButtonEvent';
+import { ESpinButtonEvent } from 'db://assets/scripts/gameplay/modules/spin_button/ESpinButtonEvent';
 
 export class GameLogic {
     constructor(

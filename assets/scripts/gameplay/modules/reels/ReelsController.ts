@@ -1,13 +1,13 @@
 import { _decorator, Component, Node, Vec2 } from 'cc';
-import { GameController } from '../../GameController';
-import { ReelsView } from './ReelsView';
-import { TSpinResult } from '../../../types';
+import { GameController } from 'db://assets/scripts/gameplay/GameController';
+import { TSpinResult } from 'db://assets/scripts/types';
 import { EReelsViewEvents } from './EReelsViewEvents';
-import { EGameLogicEvent } from '../../logic/EGameLogicEvent';
-import { EReelsEvent } from './EReelsEvent';
-import { EWinLinesEvent } from '../win_lines/EWinLinesEvent';
-import { ESpinButtonEvent } from '../spin_button/ESpinButtonEvent';
-import { EGameFlowEvent } from '../flow/EGameFlowEvent';
+import { EGameLogicEvent } from 'db://assets/scripts/gameplay/logic/EGameLogicEvent';
+import { EWinLinesEvent } from 'db://assets/scripts/gameplay/modules/win_lines/EWinLinesEvent';
+import { ESpinButtonEvent } from 'db://assets/scripts/gameplay/modules/spin_button/ESpinButtonEvent';
+import { EGameFlowEvent } from 'db://assets/scripts/gameplay/modules/flow/EGameFlowEvent';
+import { EReelsEvent } from 'db://assets/scripts/gameplay/modules/reels/EReelsEvent';
+import { ReelsView } from 'db://assets/scripts/gameplay/modules/reels/ReelsView';
 const { ccclass, property } = _decorator;
 
 @ccclass('ReelsController')

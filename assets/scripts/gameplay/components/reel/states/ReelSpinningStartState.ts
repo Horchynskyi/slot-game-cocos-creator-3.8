@@ -1,8 +1,8 @@
 import { _decorator, easing } from 'cc';
-import { ReelComponent } from '../ReelComponent';
-import { ReelBasicState } from './ReelBasicState';
-import { ReelSpinningState } from './ReelSpinningState';
+import { ReelComponent } from 'db://assets/scripts/gameplay/components/reel/ReelComponent';
 import { Deferred } from 'db://assets/scripts/basic/Deferred';
+import { ReelBasicState } from 'db://assets/scripts/gameplay/components/reel/states/ReelBasicState';
+import { ReelSpinningState } from 'db://assets/scripts/gameplay/components/reel/states/ReelSpinningState';
 const { ccclass } = _decorator;
 
 @ccclass('ReelSpinningStartState')
@@ -40,7 +40,7 @@ export class ReelSpinningStartState extends ReelBasicState<ReelComponent> {
         this.parent.updateSymbolsPositions();
 
         if (this.elapsedTime >= duration) {
-            this.changeState(ReelSpinningState);
+            this.parent.changeState(ReelSpinningState);
 
             this.completeDeferred.resolve();
         }

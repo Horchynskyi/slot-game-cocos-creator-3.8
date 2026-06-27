@@ -1,9 +1,6 @@
 import { Component } from 'cc';
-import type { StatableComponent } from './StatableComponent';
 
-export class StateComponent<
-    TParent extends StatableComponent = StatableComponent,
-> extends Component {
+export class StateComponent<TParent = unknown> extends Component {
     protected parent: TParent = null;
 
     public onEnter() {
@@ -14,10 +11,6 @@ export class StateComponent<
         this.enabled = false;
 
         this.unscheduleAllCallbacks();
-    }
-
-    public changeState(state: new () => StateComponent<TParent>): void {
-        this.parent.changeState(state);
     }
 
     public setup({ parent }: { parent: TParent }): void {

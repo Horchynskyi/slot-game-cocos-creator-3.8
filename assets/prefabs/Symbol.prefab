@@ -31,14 +31,14 @@
         "__id__": 14
       },
       {
-        "__id__": 27
+        "__id__": 26
       },
       {
-        "__id__": 29
+        "__id__": 28
       }
     ],
     "_prefab": {
-      "__id__": 31
+      "__id__": 30
     },
     "_lpos": {
       "__type__": "cc.Vec3",
@@ -184,8 +184,8 @@
     },
     "_contentSize": {
       "__type__": "cc.Size",
-      "width": 244,
-      "height": 244
+      "width": 229,
+      "height": 234
     },
     "_anchorPoint": {
       "__type__": "cc.Vec2",
@@ -221,7 +221,7 @@
       "a": 255
     },
     "_spriteFrame": {
-      "__uuid__": "9c009e8b-5d58-4dc6-a48f-ef0e701420d5@f9941",
+      "__uuid__": "b8942aa8-42d7-407e-9268-c79760b6c7d6@f9941",
       "__expectedType__": "cc.SpriteFrame"
     },
     "_type": 0,
@@ -378,21 +378,10 @@
       },
       {
         "__id__": 25
-      },
-      {
-        "__id__": 26
       }
     ],
     "defaultSpriteFrame": {
       "__uuid__": "57520716-48c8-4a19-8acf-41c9f8777fb0@f9941",
-      "__expectedType__": "cc.SpriteFrame"
-    }
-  },
-  {
-    "__type__": "SymbolSpriteFramesOption",
-    "type": 0,
-    "spriteFrame": {
-      "__uuid__": "9c009e8b-5d58-4dc6-a48f-ef0e701420d5@f9941",
       "__expectedType__": "cc.SpriteFrame"
     }
   },
@@ -478,7 +467,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 28
+      "__id__": 27
     },
     "playOnLoad": true,
     "_clips": [
@@ -515,7 +504,7 @@
     },
     "_enabled": true,
     "__prefab": {
-      "__id__": 30
+      "__id__": 29
     },
     "_id": ""
   },

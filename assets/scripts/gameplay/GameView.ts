@@ -1,5 +1,5 @@
 import { _decorator } from 'cc';
-import { View } from '../basic/View';
+import { View } from 'db://assets/scripts/basic/View';
 import { GameConfig } from './GameConfig';
 import { GameUtils } from './GameUtils';
 const { ccclass } = _decorator;

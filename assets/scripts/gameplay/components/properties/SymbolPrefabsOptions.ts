@@ -1,5 +1,5 @@
 import { _decorator, Component, Enum, Node, Prefab } from 'cc';
-import { ESymbolMap } from '../../enums';
+import { ESymbolMap } from 'db://assets/scripts/enums';
 const { ccclass, property } = _decorator;
 
 @ccclass('SymbolPrefabsOption')

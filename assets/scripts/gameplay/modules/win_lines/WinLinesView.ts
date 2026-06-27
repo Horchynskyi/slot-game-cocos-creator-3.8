@@ -1,5 +1,5 @@
 import { _decorator, Graphics } from 'cc';
-import { GameView } from '../../GameView';
+import { GameView } from 'db://assets/scripts/gameplay/GameView';
 const { ccclass, property } = _decorator;
 
 @ccclass('WinLinesView')

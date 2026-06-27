@@ -1,6 +1,6 @@
 import { easing, Vec2 } from 'cc';
-import { Config } from '../basic/Config';
-import { ESymbolMap } from '../enums';
+import { Config } from 'db://assets/scripts/basic/Config';
+import { ESymbolMap } from 'db://assets/scripts/enums';
 
 export class GameConfig extends Config {
     public currencySign: string = '$';
@@ -9,6 +9,9 @@ export class GameConfig extends Config {
 
     public reelsCount: number = 5;
     public rowsCount: number = 3;
+
+    public initialWinPresentationDuration: number = 1;
+    public individualWinPresentationDuration: number = 1.1;
 
     public reels = {
         spinningStartTime: 0.25,

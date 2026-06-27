@@ -1,5 +1,5 @@
 import { ControllerState } from 'db://assets/scripts/basic/ControllerState';
-import type { WinLinesController } from '../WinLinesController';
+import type { WinLinesController } from 'db://assets/scripts/gameplay/modules/win_lines/WinLinesController';
 
 export class WinLinesControllerBasicState extends ControllerState<WinLinesController> {
     public onEnter(): void {

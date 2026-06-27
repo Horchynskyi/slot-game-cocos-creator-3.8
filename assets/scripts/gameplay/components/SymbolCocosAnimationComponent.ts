@@ -1,5 +1,5 @@
 import { _decorator, Animation, Component, Node } from 'cc';
-import { SymbolAnimationComponent } from '../../basic/components/SymbolAnimationComponent';
+import { SymbolAnimationComponent } from 'db://assets/scripts/basic/components/SymbolAnimationComponent';
 const { ccclass, property, requireComponent } = _decorator;
 
 @ccclass('SymbolCocosAnimationComponent')

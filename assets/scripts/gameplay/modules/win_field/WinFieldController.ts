@@ -1,8 +1,8 @@
 import { _decorator } from 'cc';
-import { GameController } from '../../GameController';
-import { WinFieldView } from './WinFieldView';
-import { EGameFlowEvent } from '../flow/EGameFlowEvent';
-import { ESpinButtonEvent } from '../spin_button/ESpinButtonEvent';
+import { GameController } from 'db://assets/scripts/gameplay/GameController';
+import { EGameFlowEvent } from 'db://assets/scripts/gameplay/modules/flow/EGameFlowEvent';
+import { ESpinButtonEvent } from 'db://assets/scripts/gameplay/modules/spin_button/ESpinButtonEvent';
+import { WinFieldView } from 'db://assets/scripts/gameplay/modules/win_field/WinFieldView';
 const { ccclass, property } = _decorator;
 
 @ccclass('WinFieldController')

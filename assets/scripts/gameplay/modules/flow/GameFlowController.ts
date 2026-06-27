@@ -1,9 +1,9 @@
 import { _decorator } from 'cc';
-import { GameController } from '../../GameController';
-import { GameEventMap } from '../../events_manager/GameEventsManager';
-import { EReelsEvent } from '../reels/EReelsEvent';
-import { EWinLinesEvent } from '../win_lines/EWinLinesEvent';
-import { EGameFlowEvent } from './EGameFlowEvent';
+import { GameController } from 'db://assets/scripts/gameplay/GameController';
+import { GameEventMap } from 'db://assets/scripts/gameplay/events_manager/GameEventsManager';
+import { EGameFlowEvent } from 'db://assets/scripts/gameplay/modules/flow/EGameFlowEvent';
+import { EReelsEvent } from 'db://assets/scripts/gameplay/modules/reels/EReelsEvent';
+import { EWinLinesEvent } from 'db://assets/scripts/gameplay/modules/win_lines/EWinLinesEvent';
 const { ccclass, property } = _decorator;
 
 @ccclass('GameFlowController')

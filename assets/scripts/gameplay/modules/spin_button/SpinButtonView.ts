@@ -1,5 +1,5 @@
 import { _decorator, Button } from 'cc';
-import { GameView } from '../../GameView';
+import { GameView } from 'db://assets/scripts/gameplay/GameView';
 import {
     ESpinButtonViewEvents,
     SpinButtonViewEventMap,

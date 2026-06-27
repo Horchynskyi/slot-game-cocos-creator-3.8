@@ -1,7 +1,7 @@
 import { _decorator, easing } from 'cc';
-import { ReelComponent } from '../ReelComponent';
-import { ReelBasicState } from './ReelBasicState';
+import { ReelComponent } from 'db://assets/scripts/gameplay/components/reel/ReelComponent';
 import { Deferred } from 'db://assets/scripts/basic/Deferred';
+import { ReelBasicState } from 'db://assets/scripts/gameplay/components/reel/states/ReelBasicState';
 const { ccclass } = _decorator;
 
 @ccclass('ReelStoppingState')

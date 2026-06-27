@@ -1,10 +1,10 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, game, Node } from 'cc';
 import { GameModel } from './GameModel';
 import { GameController } from './GameController';
 import { GameConfig } from './GameConfig';
 import { GameView } from './GameView';
-import { EventsManager } from '../basic/EventsManager';
-import { GameEventMap } from './events_manager/GameEventsManager';
+import { EventsManager } from 'db://assets/scripts/basic/EventsManager';
+import { GameEventMap } from 'db://assets/scripts/gameplay/events_manager/GameEventsManager';
 import { GameLogic } from './logic/GameLogic';
 import { GameUtils } from './GameUtils';
 const { ccclass, property, executeInEditMode } = _decorator;

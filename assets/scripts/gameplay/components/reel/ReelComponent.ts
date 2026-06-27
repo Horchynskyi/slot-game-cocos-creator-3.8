@@ -1,15 +1,16 @@
-import { _decorator, Component, tween } from 'cc';
-import { SymbolComponent } from '../../../basic/components/SymbolComponent';
-import { ESymbolMap } from '../../../enums';
-import { DeepReadonly } from '../../../types';
-import { GameConfig } from '../../GameConfig';
-import { GameUtils } from '../../GameUtils';
-import { StatableComponent } from '../../../basic/StatableComponent';
-import { ReelBasicState } from './states/ReelBasicState';
-import { ReelSpinningStartState } from './states/ReelSpinningStartState';
+import { _decorator, Component, instantiate, Node, Prefab, tween } from 'cc';
+import { SymbolComponent } from 'db://assets/scripts/basic/components/SymbolComponent';
+import { ESymbolMap } from 'db://assets/scripts/enums';
+import { DeepReadonly } from 'db://assets/scripts/types';
+import { GameConfig } from 'db://assets/scripts/gameplay/GameConfig';
+import { GameUtils } from 'db://assets/scripts/gameplay/GameUtils';
+import { StatableComponent } from 'db://assets/scripts/basic/StatableComponent';
 import { EDITOR } from 'cc/env';
-import { ReelSpinningState } from './states/ReelSpinningState';
-import { ReelStoppingState } from './states/ReelStoppingState';
+import { SymbolPrefabsOptions } from 'db://assets/scripts/gameplay/components/properties/SymbolPrefabsOptions';
+import { ReelBasicState } from 'db://assets/scripts/gameplay/components/reel/states/ReelBasicState';
+import { ReelSpinningStartState } from 'db://assets/scripts/gameplay/components/reel/states/ReelSpinningStartState';
+import { ReelSpinningState } from 'db://assets/scripts/gameplay/components/reel/states/ReelSpinningState';
+import { ReelStoppingState } from 'db://assets/scripts/gameplay/components/reel/states/ReelStoppingState';
 
 const { ccclass, property } = _decorator;
 
@@ -19,14 +20,21 @@ export class ReelComponent extends StatableComponent<ReelBasicState> {
     public stripIndex: number = 0;
     public lastSpinningReorderOffset: number = 0;
 
-    protected _stopIndex: number;
+    public get symbols() {
+        return this._symbols;
+    }
 
-    protected symbols: SymbolComponent[] = null;
-    protected _config: DeepReadonly<GameConfig> = null;
-    protected _strip: ReadonlyArray<ESymbolMap> = null;
+    protected _symbols: SymbolComponent[] = [];
+
     protected symbolsOffset: number = 1;
-    protected utils: GameUtils;
     protected index: number = 0;
+    protected utils: GameUtils = null;
+
+    protected _stopIndex: number = null;
+    protected _strip: ReadonlyArray<ESymbolMap> = null;
+    protected _config: DeepReadonly<GameConfig> = null;
+    protected symbolsPrefabsMap: Map<ESymbolMap, Prefab>;
+    protected symbolPrefabsOptions: SymbolPrefabsOptions;
 
     public get stopIndex() {
         return this._stopIndex;
@@ -41,24 +49,30 @@ export class ReelComponent extends StatableComponent<ReelBasicState> {
     }
 
     public setup({
-        symbols,
         config,
         strip,
         utils,
         index,
+        symbolsPrefabsMap,
+        symbolPrefabsOptions,
     }: {
-        symbols: SymbolComponent[];
         config: DeepReadonly<GameConfig>;
         strip: ReadonlyArray<ESymbolMap>;
         utils: GameUtils;
         index: number;
+        symbolsPrefabsMap: Map<ESymbolMap, Prefab>;
+        symbolPrefabsOptions: SymbolPrefabsOptions;
     }) {
-        this.symbols = symbols;
         this._config = config;
         this._strip = strip;
+
         this.utils = utils;
         this.index = index;
 
+        this.symbolsPrefabsMap = symbolsPrefabsMap;
+        this.symbolPrefabsOptions = symbolPrefabsOptions;
+
+        this.createSymbols();
         this.setupSymbolsTypeByStrip();
         this.updateSymbolsPositions();
 
@@ -66,6 +80,44 @@ export class ReelComponent extends StatableComponent<ReelBasicState> {
             this.setupStates();
             this.enterFirstState();
         }
+    }
+
+    protected createSymbol(type: ESymbolMap): Node {
+        return instantiate(this.getSymbolPrefab(type));
+    }
+
+    protected createSymbols() {
+        const { config, symbols } = this;
+
+        for (let y = -1; y < config.rowsCount + 1; y++) {
+            const symbolType =
+                this.strip[this.getStripIndexWithOffset(this.stripIndex, y)];
+
+            const symbolNode = this.createSymbol(symbolType);
+
+            const symbol = symbolNode.getComponent(SymbolComponent);
+
+            if (symbol) {
+                symbols.push(symbol);
+            } else {
+                throw new Error(
+                    `SymbolComponent not found on symbol prefab for type ${symbolType}`,
+                );
+            }
+        }
+    }
+
+    protected getSymbolPrefab(type: ESymbolMap): Prefab {
+        const { symbolsPrefabsMap, symbolPrefabsOptions } = this;
+
+        const prefab =
+            symbolsPrefabsMap.get(type) || symbolPrefabsOptions.defaultPrefab;
+
+        if (!prefab) {
+            throw new Error(`Prefab for symbol type ${type} not found`);
+        }
+
+        return prefab;
     }
 
     protected enterFirstState() {
@@ -76,6 +128,32 @@ export class ReelComponent extends StatableComponent<ReelBasicState> {
         this.addState(ReelBasicState);
         this.addState(ReelSpinningState);
         this.addState(ReelSpinningStartState);
+    }
+
+    protected tryChangeSymbolType(symbol: SymbolComponent, type: ESymbolMap) {
+        if (symbol.type === type) {
+            return;
+        }
+
+        let actualSymbol = symbol;
+
+        const prefab = this.getSymbolPrefab(type);
+
+        if (symbol.node.name !== prefab.data.name) {
+            const newSymbolNode = instantiate(prefab);
+
+            const index = this.symbols.indexOf(symbol);
+
+            const symbolParent = symbol.node.parent;
+
+            symbol.node.destroy();
+
+            this.symbols[index] = newSymbolNode.getComponent(SymbolComponent);
+
+            symbolParent.addChild(newSymbolNode);
+        }
+
+        actualSymbol.setSymbolType(type);
     }
 
     public startSpinning() {
@@ -139,7 +217,7 @@ export class ReelComponent extends StatableComponent<ReelBasicState> {
                     -this.symbolsOffset,
                 );
 
-                lastSymbol.setSymbolType(this.strip[value]);
+                this.tryChangeSymbolType(lastSymbol, this.strip[value]);
             }
 
             this.lastSpinningReorderOffset +=

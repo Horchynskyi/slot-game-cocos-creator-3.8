@@ -1,11 +1,11 @@
 import { _decorator } from 'cc';
-import { Controller } from '../basic/Controller';
+import { Controller } from 'db://assets/scripts/basic/Controller';
 import { GameModel } from './GameModel';
 import { GameConfig } from './GameConfig';
-import { GameEventMap } from './events_manager/GameEventsManager';
+import { GameEventMap } from 'db://assets/scripts/gameplay/events_manager/GameEventsManager';
 import { GameView } from './GameView';
 import { GameUtils } from './GameUtils';
-import { GameEventsManager } from './events_manager/GameEventsManager';
+import { GameEventsManager } from 'db://assets/scripts/gameplay/events_manager/GameEventsManager';
 const { ccclass } = _decorator;
 
 @ccclass('GameController')

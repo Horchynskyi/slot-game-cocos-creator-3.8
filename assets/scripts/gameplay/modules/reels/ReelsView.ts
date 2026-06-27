@@ -1,18 +1,10 @@
-import {
-    _decorator,
-    Component,
-    instantiate,
-    Node,
-    Prefab,
-    Vec2,
-    Vec3,
-} from 'cc';
-import { GameView } from '../../GameView';
-import { SymbolPrefabsOptions } from '../../components/SymbolPrefabsOptions';
-import { ESymbolMap } from '../../../enums';
-import { SymbolComponent } from '../../../basic/components/SymbolComponent';
-import { ReelComponent } from '../../components/reel/ReelComponent';
+import { _decorator, Node, Prefab, Vec2 } from 'cc';
+import { GameView } from 'db://assets/scripts/gameplay/GameView';
+import { ESymbolMap } from 'db://assets/scripts/enums';
+import { SymbolComponent } from 'db://assets/scripts/basic/components/SymbolComponent';
+import { ReelComponent } from 'db://assets/scripts/gameplay/components/reel/ReelComponent';
 import { EReelsViewEvents } from './EReelsViewEvents';
+import { SymbolPrefabsOptions } from 'db://assets/scripts/gameplay/components/properties/SymbolPrefabsOptions';
 const { ccclass, property, executeInEditMode } = _decorator;
 
 @ccclass('ReelsView')
@@ -28,7 +20,6 @@ export class ReelsView extends GameView {
     protected unmaskedSymbolsParent: Node = null;
 
     protected symbolsPrefabsMap: Map<ESymbolMap, Prefab> = new Map();
-    protected symbols: SymbolComponent[] = [];
     protected reels: ReelComponent[] = [];
 
     protected symbolsByReels: SymbolComponent[][] = [];
@@ -36,15 +27,14 @@ export class ReelsView extends GameView {
     protected reelsSpinningOffset: Map<number, number> = new Map();
     protected reelsLastReorderY: Map<number, number> = new Map();
 
-    protected spinning: boolean = false;
-
     public startSpinning(): void {
-        const { reels, symbols, symbolsParent } = this;
+        const { reels, symbolsByReels, symbolsParent } = this;
 
-        for (const symbol of symbols) {
-            symbol.playAnimation('idle');
-
-            symbolsParent.addChild(symbol.node);
+        for (const symbols of symbolsByReels) {
+            for (const symbol of symbols) {
+                symbol.playAnimation('idle');
+                symbolsParent.addChild(symbol.node);
+            }
         }
 
         for (let i = 0; i < reels.length; i++) {
@@ -93,26 +83,24 @@ export class ReelsView extends GameView {
             symbolsPrefabsMap.set(option.type, option.prefab);
         }
 
-        this.createSymbols();
+        this.createReels();
     }
 
-    protected createSymbol(type: ESymbolMap): Node {
-        return instantiate(this.getSymbolPrefab(type));
-    }
-
-    protected createSymbols() {
+    protected createReels() {
         const {
             config,
             symbolsByReels,
             node,
-            symbols,
             reelsSpinningOffset,
             reelsLastReorderY,
             reels,
             symbolsParent,
             utils,
+            symbolsPrefabsMap,
+            symbolPrefabsOptions,
         } = this;
 
+        // Clear existing symbols and reels for editor mode
         symbolsParent.destroyAllChildren();
 
         for (const reel of this.getComponents(ReelComponent)) {
@@ -125,43 +113,22 @@ export class ReelsView extends GameView {
 
             const reelComponent = this.addComponent(ReelComponent);
 
-            for (let y = -1; y < config.rowsCount + 1; y++) {
-                const symbolNode = this.createSymbol(y);
-
-                symbolsParent.addChild(symbolNode);
-
-                const symbol = symbolNode.getComponent(SymbolComponent);
-
-                if (symbol) {
-                    symbols.push(symbol);
-
-                    symbolsByReels[x] = symbolsByReels[x] || [];
-                    symbolsByReels[x][y + 1] = symbol;
-                }
-            }
-
             reelComponent.setup({
-                symbols: symbolsByReels[x],
                 config,
                 strip: config.reelStrips[x],
                 index: x,
                 utils,
+                symbolsPrefabsMap: symbolsPrefabsMap,
+                symbolPrefabsOptions: symbolPrefabsOptions,
             });
+
+            symbolsByReels[x] = reelComponent.symbols;
+
+            for (const symbol of reelComponent.symbols) {
+                symbolsParent.addChild(symbol.node);
+            }
 
             reels.push(reelComponent);
         }
-    }
-
-    protected getSymbolPrefab(type: ESymbolMap): Prefab {
-        const { symbolsPrefabsMap, symbolPrefabsOptions } = this;
-
-        const prefab =
-            symbolsPrefabsMap.get(type) || symbolPrefabsOptions.defaultPrefab;
-
-        if (!prefab) {
-            throw new Error(`Prefab for symbol type ${type} not found`);
-        }
-
-        return prefab;
     }
 }

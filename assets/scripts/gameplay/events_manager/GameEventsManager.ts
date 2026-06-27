@@ -1,4 +1,4 @@
-import { EventsManager } from '../../basic/EventsManager';
+import { EventsManager } from 'db://assets/scripts/basic/EventsManager';
 
 export class GameEventsManager extends EventsManager<GameEventMap> {}
 

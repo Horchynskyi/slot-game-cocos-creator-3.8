@@ -1,5 +1,5 @@
 import { _decorator, Component } from 'cc';
-import { ReelComponent } from '../ReelComponent';
+import { ReelComponent } from 'db://assets/scripts/gameplay/components/reel/ReelComponent';
 import { StateComponent } from 'db://assets/scripts/basic/StateComponent';
 const { ccclass, property } = _decorator;
 

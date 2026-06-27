@@ -1,10 +1,9 @@
 import { ControllerState } from 'db://assets/scripts/basic/ControllerState';
-import type { WinLinesController } from '../WinLinesController';
-import { EWinLinesEvent } from '../EWinLinesEvent';
+import type { WinLinesController } from 'db://assets/scripts/gameplay/modules/win_lines/WinLinesController';
+import { EWinLinesEvent } from 'db://assets/scripts/gameplay/modules/win_lines/EWinLinesEvent';
 
 export class WinLinesControllerIndividualLineWinState extends ControllerState<WinLinesController> {
     protected currentLineIndex: number = 0;
-    protected lineChangeDuration: number = 1.1;
 
     public onEnter(): void {
         super.onEnter();
@@ -19,7 +18,7 @@ export class WinLinesControllerIndividualLineWinState extends ControllerState<Wi
     }
 
     protected playCurrentLineWin() {
-        const { model, view, parent } = this;
+        const { model, view, parent, config } = this;
 
         parent.emit(
             EWinLinesEvent.INDIVIDUAL_WIN_LINE_STARTED,
@@ -32,7 +31,7 @@ export class WinLinesControllerIndividualLineWinState extends ControllerState<Wi
 
         this.scheduleOnce(() => {
             this.proceedToNextLineWin();
-        }, this.lineChangeDuration);
+        }, config.individualWinPresentationDuration);
     }
 
     protected proceedToNextLineWin() {

@@ -1,9 +1,9 @@
 import { _decorator } from 'cc';
-import { GameController } from '../../GameController';
-import { SpinButtonView } from './SpinButtonView';
-import { ESpinButtonViewEvents } from './ESpinButtonViewEvents';
-import { ESpinButtonEvent } from './ESpinButtonEvent';
-import { EGameFlowEvent } from '../flow/EGameFlowEvent';
+import { GameController } from 'db://assets/scripts/gameplay/GameController';
+import { EGameFlowEvent } from 'db://assets/scripts/gameplay/modules/flow/EGameFlowEvent';
+import { ESpinButtonEvent } from 'db://assets/scripts/gameplay/modules/spin_button/ESpinButtonEvent';
+import { ESpinButtonViewEvents } from 'db://assets/scripts/gameplay/modules/spin_button/ESpinButtonViewEvents';
+import { SpinButtonView } from 'db://assets/scripts/gameplay/modules/spin_button/SpinButtonView';
 const { ccclass } = _decorator;
 
 @ccclass('SpinButtonController')

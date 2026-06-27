@@ -3,7 +3,7 @@ export enum EGameFlowEvent {
     ROUND_FINISHED = 'ROUND_FINISHED',
 }
 
-declare module '../../events_manager/GameEventsManager' {
+declare module 'db://assets/scripts/gameplay/events_manager/GameEventsManager' {
     export interface GameEventMap {
         [EGameFlowEvent.HAS_WIN]: [];
         [EGameFlowEvent.ROUND_FINISHED]: [];

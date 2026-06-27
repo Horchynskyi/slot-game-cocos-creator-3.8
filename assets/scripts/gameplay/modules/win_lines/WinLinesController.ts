@@ -1,11 +1,11 @@
 import { _decorator, Component, Node } from 'cc';
-import { GameController } from '../../GameController';
-import { WinLinesView } from './WinLinesView';
-import { WinLinesControllerWinState } from './states/WinLinesControllerWinState';
-import { WinLinesControllerBasicState } from './states/WinLinesControllerBasicState';
+import { GameController } from 'db://assets/scripts/gameplay/GameController';
 import { WinLinesControllerIndividualLineWinState } from './states/WinLinesControllerIndividualLineWinState';
-import { EReelsEvent } from '../reels/EReelsEvent';
-import { EGameFlowEvent } from '../flow/EGameFlowEvent';
+import { EReelsEvent } from 'db://assets/scripts/gameplay/modules/reels/EReelsEvent';
+import { EGameFlowEvent } from 'db://assets/scripts/gameplay/modules/flow/EGameFlowEvent';
+import { WinLinesControllerBasicState } from 'db://assets/scripts/gameplay/modules/win_lines/states/WinLinesControllerBasicState';
+import { WinLinesControllerWinState } from 'db://assets/scripts/gameplay/modules/win_lines/states/WinLinesControllerWinState';
+import { WinLinesView } from 'db://assets/scripts/gameplay/modules/win_lines/WinLinesView';
 const { ccclass, property } = _decorator;
 
 @ccclass('WinLinesController')

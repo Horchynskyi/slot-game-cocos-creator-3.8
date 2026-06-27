@@ -1,5 +1,5 @@
 import { Vec2, Vec3 } from 'cc';
-import { DeepReadonly } from '../types';
+import { DeepReadonly } from 'db://assets/scripts/types';
 import { GameConfig } from './GameConfig';
 
 export class GameUtils {
