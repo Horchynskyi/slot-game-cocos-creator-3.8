@@ -151,6 +151,8 @@ export class ReelComponent extends StatableComponent<ReelBasicState> {
             this.symbols[index] = newSymbolNode.getComponent(SymbolComponent);
 
             symbolParent.addChild(newSymbolNode);
+
+            actualSymbol = this.symbols[index];
         }
 
         actualSymbol.setSymbolType(type);

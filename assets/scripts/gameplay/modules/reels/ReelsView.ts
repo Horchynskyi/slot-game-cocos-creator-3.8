@@ -28,14 +28,10 @@ export class ReelsView extends GameView {
     protected reelsLastReorderY: Map<number, number> = new Map();
 
     public startSpinning(): void {
-        const { reels, symbolsByReels, symbolsParent } = this;
+        const { reels } = this;
 
-        for (const symbols of symbolsByReels) {
-            for (const symbol of symbols) {
-                symbol.playAnimation('idle');
-                symbolsParent.addChild(symbol.node);
-            }
-        }
+        this.playAnimationForAllSymbols('idle');
+        this.moveAllSymbolToMaskedParent();
 
         for (let i = 0; i < reels.length; i++) {
             const reel = reels[i];
@@ -67,12 +63,34 @@ export class ReelsView extends GameView {
     }
 
     public playWinAnimation(winPositions: Vec2[]) {
+        this.moveAllSymbolToMaskedParent();
+
         for (const pos of winPositions) {
             const symbol = this.symbolsByReels[pos.x][pos.y + 1]; // +1 because of the extra symbol at the top
 
             symbol.playAnimation('win');
 
             this.unmaskedSymbolsParent.addChild(symbol.node);
+        }
+    }
+
+    protected playAnimationForAllSymbols(name: string) {
+        const { symbolsByReels } = this;
+
+        for (const symbols of symbolsByReels) {
+            for (const symbol of symbols) {
+                symbol.playAnimation(name);
+            }
+        }
+    }
+
+    protected moveAllSymbolToMaskedParent() {
+        const { symbolsByReels, symbolsParent } = this;
+
+        for (const symbols of symbolsByReels) {
+            for (const symbol of symbols) {
+                symbolsParent.addChild(symbol.node);
+            }
         }
     }
 
@@ -90,7 +108,6 @@ export class ReelsView extends GameView {
         const {
             config,
             symbolsByReels,
-            node,
             reelsSpinningOffset,
             reelsLastReorderY,
             reels,
